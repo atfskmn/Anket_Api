@@ -1,0 +1,144 @@
+{
+    "info": {
+        "name": "Anket API",
+        "_postman_id": "anket-api-collection",
+        "description": "Tüm API uç noktalarını test etmek için örnek koleksiyon.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Register",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"name\":\"Test User\",\"email\":\"testuser@example.com\",\"password\":\"1234567890\",\"password_confirmation\":\"1234567890\"}"
+                },
+                "url": {
+                    "raw": "http://127.0.0.1:8000/api/auth/register",
+                    "protocol": "http",
+                    "host": [
+                        "127.0.0.1:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "auth",
+                        "register"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Login",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"email\":\"testuser@example.com\",\"password\":\"1234567890\"}"
+                },
+                "url": {
+                    "raw": "http://127.0.0.1:8000/api/auth/login",
+                    "protocol": "http",
+                    "host": [
+                        "127.0.0.1:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "auth",
+                        "login"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Get Public Surveys",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "http://127.0.0.1:8000/api/surveys/public",
+                    "protocol": "http",
+                    "host": [
+                        "127.0.0.1:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "surveys",
+                        "public"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Get Public Survey Detail",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "http://127.0.0.1:8000/api/surveys/1/public",
+                    "protocol": "http",
+                    "host": [
+                        "127.0.0.1:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "surveys",
+                        "1",
+                        "public"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Submit Survey Response",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"respondent_name\":\"Test\",\"respondent_email\":\"test@example.com\",\"answers\":[{\"question_id\":1,\"option_id\":1}]}"
+                },
+                "url": {
+                    "raw": "http://127.0.0.1:8000/api/surveys/1/responses",
+                    "protocol": "http",
+                    "host": [
+                        "127.0.0.1:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "surveys",
+                        "1",
+                        "responses"
+                    ]
+                }
+            }
+        }
+    ]
+}
