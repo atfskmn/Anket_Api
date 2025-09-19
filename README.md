@@ -1,61 +1,127 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# 📋 Anket Programı
 
-## About Laravel
+## 📋 Proje Tanımı
+Online anket oluşturma, paylaşma ve sonuçlarını analiz etme sistemi. Kullanıcılar çoktan seçmeli ve açık uçlu sorularla anket oluşturabilir, paylaşabilir ve sonuçlarını analiz edebilir.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🎯 Proje Hedefleri
+- Anket oluşturma ve düzenleme sistemi
+- Çoktan seçmeli ve açık uçlu soru tipleri
+- Anket paylaşımı ve cevaplama sistemi
+- Sonuç analizi ve grafik raporlama
+- Admin paneli ile anket yönetimi
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🗺️ Veritabanı Yapısı
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. surveys (Anketler)
+- id (Primary Key)
+- title (varchar 200) - Anket başlığı
+- description (text) - Anket açıklaması
+- start_date (timestamp) - Başlangıç tarihi
+- end_date (timestamp) - Bitiş tarihi
+- is_active (boolean) - Aktif/pasif durumu
+- is_public (boolean) - Herkese açık mı
+- allow_anonymous (boolean) - Anonim cevaba izin ver
+- max_responses (integer) - Maksimum cevap sayısı
+- response_count (integer) - Mevcut cevap sayısı
+- created_by (integer) - Oluşturan kullanıcı ID
+- created_at (timestamp)
+- updated_at (timestamp)
 
-## Learning Laravel
+### 2. questions (Sorular)
+- id (Primary Key)
+- survey_id (Foreign Key) - surveys.id
+- question_text (text) - Soru metni
+- question_type (enum) - Soru tipi (multiple_choice, single_choice, text, textarea, rating, yes_no)
+- is_required (boolean) - Zorunlu mu
+- sort_order (integer) - Sıralama
+- help_text (text) - Yardım metni
+- created_at (timestamp)
+- updated_at (timestamp)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 3. question_options (Soru Seçenekleri)
+- id (Primary Key)
+- question_id (Foreign Key) - questions.id
+- option_text (varchar 255) - Seçenek metni
+- sort_order (integer) - Sıralama
+- is_other (boolean) - "Diğer" seçeneği mi
+- created_at (timestamp)
+- updated_at (timestamp)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 4. responses (Cevaplar)
+- id (Primary Key)
+- survey_id (Foreign Key) - surveys.id
+- respondent_name (varchar 100) - Cevaplayıcı adı
+- respondent_email (varchar 255) - Cevaplayıcı e-posta
+- submitted_at (timestamp) - Gönderim tarihi
+- ip_address (varchar 45) - IP adresi
+- user_agent (text) - Tarayıcı bilgisi
+- is_complete (boolean) - Tamamlandı mı
+- created_at (timestamp)
+- updated_at (timestamp)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 5. answers (Yanıtlar)
+- id (Primary Key)
+- response_id (Foreign Key) - responses.id
+- question_id (Foreign Key) - questions.id
+- option_id (Foreign Key) - question_options.id (nullable)
+- answer_text (text) - Metin yanıtı
+- rating_value (integer) - Puanlama değeri
+- created_at (timestamp)
+- updated_at (timestamp)
 
-## Laravel Sponsors
+## 🔌 API Endpoint'leri
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Public Endpoints
+- `GET /api/surveys/{id}` - Anket detayı ve soruları
+- `POST /api/surveys/{id}/responses` - Anket cevapla
+- `GET /api/surveys/{id}/results` - Anket sonuçları (public ise)
+- `GET /api/surveys/public` - Herkese açık anketler
 
-### Premium Partners
+### User Endpoints (JWT korumalı)
+- `POST /api/surveys` - Anket oluştur
+- `PUT /api/surveys/{id}` - Anket güncelle
+- `DELETE /api/surveys/{id}` - Anket sil
+- `GET /api/user/surveys` - Anketlerim
+- `POST /api/surveys/{id}/questions` - Soru ekle
+- `PUT /api/questions/{id}` - Soru güncelle
+- `DELETE /api/questions/{id}` - Soru sil
+- `GET /api/surveys/{id}/analytics` - Anket analizi
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Admin Endpoints (JWT korumalı)
+- `GET /api/admin/surveys` - Tüm anketler
+- `GET /api/admin/responses` - Tüm cevaplar
+- `GET /api/admin/analytics` - Genel istatistikler
+- `PUT /api/admin/surveys/{id}/status` - Anket durumu güncelle
+- `DELETE /api/admin/surveys/{id}` - Anket sil (admin)
 
-## Contributing
+### Auth Endpoints
+- `POST /api/auth/login` - Giriş yap
+- `POST /api/auth/register` - Kayıt ol
+- `POST /api/auth/logout` - Çıkış yap
+- `GET /api/auth/me` - Kullanıcı bilgileri
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🧭 Menü Yapısı
 
-## Code of Conduct
+### Ana Menü
+- 🏠 Ana Sayfa
+- 📋 Anketler
+- 📊 Sonuçlar
+- 📝 Anket Oluştur
+- 👤 Giriş/Kayıt
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Kullanıcı Menü (Giriş sonrası)
+- 🏠 Ana Sayfa
+- 📋 Anketlerim
+- 📊 Sonuçlarım
+- 📝 Yeni Anket
+- 👤 Profil
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
+### Admin Menü
+- 📈 Kontrol Paneli
+- 📋 Anket Yönetimi
+- 👥 Kullanıcı Yönetimi
+- 📄 Raporlar
+- 👤 Profil
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
