@@ -1,17 +1,17 @@
 
 # 📋 Anket Programı
 
-## 📋 Proje Tanımı
+## Proje Tanımı
 Online anket oluşturma, paylaşma ve sonuçlarını analiz etme sistemi. Kullanıcılar çoktan seçmeli ve açık uçlu sorularla anket oluşturabilir, paylaşabilir ve sonuçlarını analiz edebilir.
 
-## 🎯 Proje Hedefleri
+## Proje Hedefleri
 - Anket oluşturma ve düzenleme sistemi
 - Çoktan seçmeli ve açık uçlu soru tipleri
 - Anket paylaşımı ve cevaplama sistemi
 - Sonuç analizi ve grafik raporlama
 - Admin paneli ile anket yönetimi
 
-## 🗺️ Veritabanı Yapısı
+## 🗺Veritabanı Yapısı
 
 ### 1. surveys (Anketler)
 - id (Primary Key)
@@ -101,27 +101,27 @@ Online anket oluşturma, paylaşma ve sonuçlarını analiz etme sistemi. Kullan
 - `POST /api/auth/logout` - Çıkış yap
 - `GET /api/auth/me` - Kullanıcı bilgileri
 
-## 🧭 Menü Yapısı
+##  Menü Yapısı
 
 ### Ana Menü
-- 🏠 Ana Sayfa
-- 📋 Anketler
-- 📊 Sonuçlar
-- 📝 Anket Oluştur
-- 👤 Giriş/Kayıt
+- Ana Sayfa
+-  Anketler
+-  Sonuçlar
+-  Anket Oluştur
+-  Giriş/Kayıt
 
 ### Kullanıcı Menü (Giriş sonrası)
-- 🏠 Ana Sayfa
-- 📋 Anketlerim
-- 📊 Sonuçlarım
-- 📝 Yeni Anket
-- 👤 Profil
+-  Ana Sayfa
+- Anketlerim
+-  Sonuçlarım
+- Yeni Anket
+- Profil
 
 ### Admin Menü
-- 📈 Kontrol Paneli
-- 📋 Anket Yönetimi
-- 👥 Kullanıcı Yönetimi
-- 📄 Raporlar
-- 👤 Profil
+-  Kontrol Paneli
+-  Anket Yönetimi
+-  Kullanıcı Yönetimi
+-  Raporlar
+-  Profil
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
